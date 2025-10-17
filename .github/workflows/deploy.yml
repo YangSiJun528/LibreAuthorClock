@@ -38,7 +38,7 @@ jobs:
       - name: Build Elm to single HTML
         run: |
           mkdir -p build
-          elm make src/Main.elm --output=build/index.html
+          elm make src/Main.elm --optimize --output=build/index.html
 
       - name: Copy i18n files
         run: |
