@@ -7,4 +7,4 @@
 TODO
 
 ## Acknowledgment
-This project’s some quote collection was inspired by [Open Author Clock](https://github.com/ambercaravalho/open-author-clock).
+This project’s some quote collection was found by [literature-clock](https://github.com/codetheweb/literature-clock).
