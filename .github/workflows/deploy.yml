@@ -40,6 +40,11 @@ jobs:
           mkdir -p build
           elm make src/Main.elm --output=build/index.html
 
+      - name: Copy i18n files
+        run: |
+          mkdir -p build/i18n
+          cp -r i18n/* build/i18n/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
