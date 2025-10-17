@@ -62,7 +62,7 @@ async function setLanguage(language) {
 function getQuote(timeKey) {
     const quotesForLanguage = allQuotes[currentLanguage];
     if (!quotesForLanguage || !quotesForLanguage[timeKey]) {
-        console.error(`No quotes found for ${currentLanguage} at ${timeKey}`);
+        console.warn(`No quotes found for ${currentLanguage} at ${timeKey}`);
         return null;
     }
     const quotesForTime = quotesForLanguage[timeKey];
@@ -74,8 +74,8 @@ function getMessage(key) {
     if (allMessages[currentLanguage] && allMessages[currentLanguage][key]) {
         return allMessages[currentLanguage][key];
     }
-    console.warn(`Message '${key}' not found for ${currentLanguage}`);
-    return "";
+    console.error(`Message '${key}' not found for ${currentLanguage}`);
+    return "ERR_MESSAGE_NOT_FOUND";
 }
 
 async function updateDisplay() {
