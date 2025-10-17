@@ -35,7 +35,7 @@ parseLine line =
 parseTextWithBold : String -> String -> List TextFragment
 parseTextWithBold timeDisplay text =
     let
-        escaped = "(?i)" ++ timeDisplay
+        escaped = timeDisplay
         pattern = Maybe.withDefault Regex.never (Regex.fromString escaped)
         matches = Regex.find pattern text
     in
