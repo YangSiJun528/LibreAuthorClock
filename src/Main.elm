@@ -110,9 +110,6 @@ update msg model =
             , Cmd.none
             )
         QuotesLoadFailed lang ->
-            let
-                _ = Debug.log "Failed to load quotes for language" lang
-            in
             ( model, Cmd.none )
         MessagesLoaded lang content ->
             let
@@ -125,9 +122,6 @@ update msg model =
             , Cmd.none
             )
         MessagesLoadFailed lang ->
-            let
-                _ = Debug.log "Failed to load system messages for language" lang
-            in
             ( model, Cmd.none )
 
 -- LOAD FILE DATA
