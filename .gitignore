@@ -1,5 +1,11 @@
-# Created by https://www.toptal.com/developers/gitignore/api/jetbrains+all,vim,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=jetbrains+all,vim,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/elm,vim,jetbrains+all,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=elm,vim,jetbrains+all,visualstudiocode
+
+### Elm ###
+# elm-package generated files
+elm-stuff
+# elm-repl generated files
+repl-temp-*
 
 ### JetBrains+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -129,4 +135,4 @@ tags
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,vim,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/elm,vim,jetbrains+all,visualstudiocode
