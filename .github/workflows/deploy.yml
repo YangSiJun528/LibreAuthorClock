@@ -35,10 +35,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Build Elm to single HTML
+        run: |
+          mkdir -p build
+          elm make src/Main.elm --output=build/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './index.html'   # Upload Single HTML
+          path: 'build'
 
       - name: Deploy to GitHub Pages
         id: deployment
