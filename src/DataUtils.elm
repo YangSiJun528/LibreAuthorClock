@@ -18,7 +18,7 @@ parseQuote content =
 
 parseLine : String -> Maybe ( String, QuoteData )
 parseLine line =
-    case String.split "|=|" line of
+    case String.split "|" line of
         [ timeKey, timeDisplay, quoteText, quoteSource, quoteAuthor ] ->
             Just
                 ( timeKey
