@@ -35,6 +35,7 @@ parseLine line =
 parseTextWithBold : String -> String -> List TextFragment
 parseTextWithBold timeDisplay text =
     let
+        --TODO: Find patterns ignoring case
         escaped = timeDisplay
         pattern = Maybe.withDefault Regex.never (Regex.fromString escaped)
         matches = Regex.find pattern text
