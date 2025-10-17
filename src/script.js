@@ -48,7 +48,7 @@ async function loadMessages(language) {
     }
 }
 
-async function setLanguage(language) {
+async function setLanguage(language, overrideTime) {
     await Promise.all([
         loadQuotes(language),
         loadMessages(language)
@@ -56,7 +56,7 @@ async function setLanguage(language) {
     currentLanguage = language;
     document.documentElement.lang = language;
     document.getElementById('lang-selector').value = language;
-    await updateDisplay();
+    await updateDisplay(overrideTime);
 }
 
 function getQuote(timeKey) {
@@ -78,7 +78,7 @@ function getMessage(key) {
     return "ERR_MESSAGE_NOT_FOUND";
 }
 
-async function updateDisplay() {
+async function updateDisplay(overrideTime) {
     if (!currentLanguage || !allQuotes[currentLanguage] || !allMessages[currentLanguage]) {
         console.error('Data not loaded for', currentLanguage);
         document.getElementById('quote').textContent = getMessage('QUOTE_LOADING')
@@ -86,13 +86,12 @@ async function updateDisplay() {
         document.getElementById('author').textContent = '';
         return;
     }
-    const now = new Date();
-    const timeKey = now.toTimeString().slice(0, 5);
+    const timeKey = overrideTime || new Date().toTimeString().slice(0, 5);
     const quoteData = getQuote(timeKey);
     if (quoteData) {
         const { timeDisplay, quoteText, quoteSource, quoteAuthor } = quoteData;
         const highlightedQuote = quoteText.replace(
-            new RegExp(timeDisplay.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'),
+            new RegExp(timeDisplay.replace(/[.*+?^${}()|[\\]/g, '\\$&'), 'gi'),
             match => `<strong>${match}</strong>`
         );
         document.getElementById('quote').innerHTML = highlightedQuote;
@@ -106,24 +105,31 @@ async function updateDisplay() {
 }
 
 async function startApp() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fixedTime = urlParams.get('time');
+
     const langSelector = document.getElementById('lang-selector');
     langSelector.addEventListener('change', (event) => {
-        setLanguage(event.target.value);
+        setLanguage(event.target.value, fixedTime);
     });
+
     //TODO: initial language to be users locale
     const initialLanguage = 'en';
-    await setLanguage(initialLanguage);
-    function scheduleNextUpdate() {
-        const now = new Date();
-        const seconds = now.getSeconds();
-        const milliseconds = now.getMilliseconds();
-        const delay = (60 - seconds) * 1000 - milliseconds;
-        setTimeout(async () => {
-            await updateDisplay();
-            scheduleNextUpdate();
-        }, delay);
+    await setLanguage(initialLanguage, fixedTime);
+
+    if (!fixedTime) {
+        function scheduleNextUpdate() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+            const delay = (60 - seconds) * 1000 - milliseconds;
+            setTimeout(async () => {
+                await updateDisplay();
+                scheduleNextUpdate();
+            }, delay);
+        }
+        scheduleNextUpdate();
     }
-    scheduleNextUpdate();
 }
 
 startApp();
